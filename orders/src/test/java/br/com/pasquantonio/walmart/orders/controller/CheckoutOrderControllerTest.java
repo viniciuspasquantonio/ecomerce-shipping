@@ -16,17 +16,17 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.jayway.restassured.RestAssured;
 import com.jayway.restassured.http.ContentType;
 
-import br.com.pasquantonio.walmart.orders.domain.Order;
-import br.com.pasquantonio.walmart.orders.service.OrderService;
+import br.com.pasquantonio.walmart.orders.domain.CheckoutOrder;
+import br.com.pasquantonio.walmart.orders.service.CheckoutOrderService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-public class OrderControllerTest {
+public class CheckoutOrderControllerTest {
 
 	private static final String FIRST_INVOICE = "first invoice";
 	private static final String SECOND_INVOICE = "second invoice";
 	private static final String THIRD_INVOICE = "third invoice";
-	private static final String ID_FIELD = "id";
+	private static final String ID_FIELD = "checkoutId";
 	private static final String FIRSTORDER_DESTINATION_ADRESS = "main street";
 	private static final String SECOND_ORDER_DESTINATION_ADRESS = "vahia de abreu";
 	private static final String THIRD_ORDER_DESTINATION_ADRESS = "route 66";
@@ -36,39 +36,39 @@ public class OrderControllerTest {
 	private static final String DESTINATION_ADRESS_FIELD = "destinationAdress";
 	private static final String PRODUCTS_QUANTITY_FIELD = "productsQuantity";
 
-	private static final String ORDERS_RESOURCE = "/orders/";
-	private static final String ORDERS_RESOURCE_ID = "/orders/{id}";
+	private static final String ORDERS_RESOURCE = "/checkoutOrders/";
+	private static final String ORDERS_RESOURCE_ID = "/checkoutOrders/{id}";
 
 	@LocalServerPort
 	private int port;
 
 	@Autowired
-	private OrderService service;
+	private CheckoutOrderService service;
 
-	private Order firstOrder;
-	private Order secondOrder;
-	private Order thirdOrder;
+	private CheckoutOrder firstOrder;
+	private CheckoutOrder secondOrder;
+	private CheckoutOrder thirdOrder;
 
 	
 	@Before
 	public void setUp() {
 		service.deleteAll();
 		
-		firstOrder = new Order();
+		firstOrder = new CheckoutOrder();
 		firstOrder.setDestinationAdress(FIRSTORDER_DESTINATION_ADRESS);
 		firstOrder.setProductsQuantity(FIRSTORDER_PRODUCTS_QUANTITY);
 		firstOrder.setInvoice(FIRST_INVOICE);
 
 		firstOrder = service.save(firstOrder);
 		
-		secondOrder = new Order();
+		secondOrder = new CheckoutOrder();
 		secondOrder.setDestinationAdress(SECOND_ORDER_DESTINATION_ADRESS);
 		secondOrder.setProductsQuantity(SECOND_ORDER_PRODUCTS_QUANTITY);
 		secondOrder.setInvoice(SECOND_INVOICE);
 
 		secondOrder = service.save(secondOrder);
 		
-		thirdOrder = new Order();
+		thirdOrder = new CheckoutOrder();
 		thirdOrder.setDestinationAdress(THIRD_ORDER_DESTINATION_ADRESS);
 		thirdOrder.setProductsQuantity(THIRD_ORDER_PRODUCTS_QUANTITY);
 		thirdOrder.setInvoice(THIRD_INVOICE);
@@ -94,12 +94,12 @@ public class OrderControllerTest {
 		given()
 			.contentType(ContentType.JSON)
         .when()
-        	.get(ORDERS_RESOURCE_ID, firstOrder.getId())
+        	.get(ORDERS_RESOURCE_ID, firstOrder.getCheckoutId())
         .then()
         	.statusCode(HttpStatus.SC_OK)
         	.body(PRODUCTS_QUANTITY_FIELD, is(FIRSTORDER_PRODUCTS_QUANTITY))
     	    .body(DESTINATION_ADRESS_FIELD, is(FIRSTORDER_DESTINATION_ADRESS))
-            .body(ID_FIELD, is(firstOrder.getId()));
+            .body(ID_FIELD, is(firstOrder.getCheckoutId()));
     }
 	
 	@Test
@@ -138,14 +138,14 @@ public class OrderControllerTest {
 	@Test
 	public void updateOrderShouldReturnUpdatedOrder() {
 	  // Given an unchecked first item
-	  Order order = new Order();
+	  CheckoutOrder order = new CheckoutOrder();
 	  order.setProductsQuantity(FIRSTORDER_PRODUCTS_QUANTITY);
 	  order.setDestinationAdress(FIRSTORDER_DESTINATION_ADRESS);
 	  given()
 	    .body(order)
 	    .contentType(ContentType.JSON)
 	  .when()
-	    .put(ORDERS_RESOURCE_ID, firstOrder.getId())
+	    .put(ORDERS_RESOURCE_ID, firstOrder.getCheckoutId())
 	  .then()
 	    .statusCode(HttpStatus.SC_OK)
 	    .body(PRODUCTS_QUANTITY_FIELD, is(FIRSTORDER_PRODUCTS_QUANTITY))
@@ -157,7 +157,7 @@ public class OrderControllerTest {
 		given()
 	  		.contentType(ContentType.JSON)
 		.when()
-	    	.put(ORDERS_RESOURCE_ID, firstOrder.getId())
+	    	.put(ORDERS_RESOURCE_ID, firstOrder.getCheckoutId())
     	.then()
     		.statusCode(HttpStatus.SC_BAD_REQUEST);
 	}
@@ -167,7 +167,7 @@ public class OrderControllerTest {
 		given()
 	    	.body(firstOrder)
     	.when()
-	    	.put(ORDERS_RESOURCE_ID, firstOrder.getId())
+	    	.put(ORDERS_RESOURCE_ID, firstOrder.getCheckoutId())
     	.then()
 	    	.statusCode(HttpStatus.SC_UNSUPPORTED_MEDIA_TYPE);
 	}
@@ -177,7 +177,7 @@ public class OrderControllerTest {
 		given()
   			.contentType(ContentType.JSON)
 		.when()
-	    	.delete(ORDERS_RESOURCE_ID, secondOrder.getId())
+	    	.delete(ORDERS_RESOURCE_ID, secondOrder.getCheckoutId())
     	.then()
 	    	.statusCode(HttpStatus.SC_NO_CONTENT);
 	}

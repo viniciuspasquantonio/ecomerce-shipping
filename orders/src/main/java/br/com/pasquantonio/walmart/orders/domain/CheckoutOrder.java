@@ -3,20 +3,22 @@ package br.com.pasquantonio.walmart.orders.domain;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.redis.core.RedisHash;
 
-@RedisHash("products")
-public class Order {
+@RedisHash("checkoutOrder")
+public class CheckoutOrder {
 
 	@Id
-	private Integer id;
+	private Integer checkoutId;
 	
 	private Integer productsQuantity;
 	 
 	private String destinationAdress;
 	
 	private String invoice;
+	
+	private CheckoutState state;
 
 	public Integer getProductsQuantity() {
-		return productsQuantity;
+		return productsQuantity; 
 	}
 
 	public void setProductsQuantity(Integer productsQuantity) {
@@ -39,12 +41,19 @@ public class Order {
 		this.invoice = invoice;
 	}
 
-	public Integer getId() {
-		return id;
+	public Integer getCheckoutId() {
+		return checkoutId;
 	}
 
 	public void setId(Integer id) {
-		this.id = id;
+		this.checkoutId = id;
+	}
+	public CheckoutState getState() {
+		return state;
+	}
+
+	public void setState(CheckoutState state) {
+		this.state = state;
 	}
 
 }
