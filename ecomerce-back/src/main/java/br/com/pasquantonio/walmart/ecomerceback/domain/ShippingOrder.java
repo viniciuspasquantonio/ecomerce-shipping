@@ -1,7 +1,15 @@
 package br.com.pasquantonio.walmart.ecomerceback.domain;
 
-public class Order {
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
+@Entity
+public class ShippingOrder {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
 	
 	private Integer checkoutId;
@@ -12,6 +20,7 @@ public class Order {
 	
 	private String invoice;
 	
+	@Enumerated()
 	private OrderState orderState;
 
 	public Integer getProductsQuantity() {
@@ -64,6 +73,6 @@ public class Order {
 	
 	@Override
 	public String toString() {
-		return this.invoice;
+		return String.format("invoice: %s; destination: %s; checkoutId: %s",invoice,destinationAdress,checkoutId);
 	}
 }

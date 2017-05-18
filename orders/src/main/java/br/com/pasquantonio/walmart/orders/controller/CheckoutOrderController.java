@@ -37,13 +37,13 @@ public class CheckoutOrderController {
 	@RequestMapping(value = "/", method = RequestMethod.POST, consumes="application/json")
 	@ResponseStatus(HttpStatus.CREATED)
 	public CheckoutOrder create(@RequestBody @Valid CheckoutOrder order) {
-		return checkoutOrderService.save(order);
+		return checkoutOrderService.create(order);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes="application/json")
 	@ResponseStatus(HttpStatus.OK)
 	public CheckoutOrder update(@RequestBody @Valid CheckoutOrder order, @PathVariable Long id) {
-		return checkoutOrderService.save(order);
+		return checkoutOrderService.create(order);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE, consumes="application/json")

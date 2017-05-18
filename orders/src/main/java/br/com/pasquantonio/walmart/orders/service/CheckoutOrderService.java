@@ -8,10 +8,13 @@ public interface CheckoutOrderService {
 
 	CheckoutOrder findOne(Integer id);
 
-	CheckoutOrder save(CheckoutOrder order);
+	CheckoutOrder create(CheckoutOrder order);
 
 	void delete(Integer id);
 
 	void deleteAll();
+	
+	CheckoutOrder update(CheckoutOrder order);
+
 
 }

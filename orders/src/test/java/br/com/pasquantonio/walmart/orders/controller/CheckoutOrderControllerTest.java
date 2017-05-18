@@ -59,14 +59,14 @@ public class CheckoutOrderControllerTest {
 		firstOrder.setProductsQuantity(FIRSTORDER_PRODUCTS_QUANTITY);
 		firstOrder.setInvoice(FIRST_INVOICE);
 
-		firstOrder = service.save(firstOrder);
+		firstOrder = service.create(firstOrder);
 		
 		secondOrder = new CheckoutOrder();
 		secondOrder.setDestinationAdress(SECOND_ORDER_DESTINATION_ADRESS);
 		secondOrder.setProductsQuantity(SECOND_ORDER_PRODUCTS_QUANTITY);
 		secondOrder.setInvoice(SECOND_INVOICE);
 
-		secondOrder = service.save(secondOrder);
+		secondOrder = service.create(secondOrder);
 		
 		thirdOrder = new CheckoutOrder();
 		thirdOrder.setDestinationAdress(THIRD_ORDER_DESTINATION_ADRESS);

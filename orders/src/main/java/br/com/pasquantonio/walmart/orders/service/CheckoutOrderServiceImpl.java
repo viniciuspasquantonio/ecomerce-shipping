@@ -1,10 +1,10 @@
 package br.com.pasquantonio.walmart.orders.service;
 
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.pasquantonio.walmart.orders.domain.CheckoutOrder;
+import br.com.pasquantonio.walmart.orders.domain.CheckoutState;
 import br.com.pasquantonio.walmart.orders.repository.CheckoutOrderRepository;
 import br.com.pasquantonio.walmart.orders.sender.CheckoutOrderMessageSender;
 
@@ -29,7 +29,8 @@ public class CheckoutOrderServiceImpl implements CheckoutOrderService {
 	}
 
 	@Override
-	public CheckoutOrder save(CheckoutOrder order) {
+	public CheckoutOrder create(CheckoutOrder order) {
+		order.setState(CheckoutState.PENDING);
 		CheckoutOrder createdOrder =  orderRepository.save(order);
 		checkoutOrderMessageSender.sendCheckoutMessage(createdOrder);
 		return createdOrder;
@@ -45,6 +46,11 @@ public class CheckoutOrderServiceImpl implements CheckoutOrderService {
 	public void deleteAll() {
 		orderRepository.deleteAll();
 
+	}
+
+	@Override
+	public CheckoutOrder update(CheckoutOrder order) {
+		return orderRepository.save(order);
 	}
 
 

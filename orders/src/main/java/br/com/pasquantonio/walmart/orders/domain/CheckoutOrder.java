@@ -55,5 +55,10 @@ public class CheckoutOrder {
 	public void setState(CheckoutState state) {
 		this.state = state;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("checkout accepted! invoice: %s; destination: %s; checkoutId: %s",invoice,destinationAdress,checkoutId);
+	}
 
 }

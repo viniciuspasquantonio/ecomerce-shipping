@@ -19,7 +19,7 @@ public class CheckoutOrderMessageSender{
 	public void sendCheckoutMessage(CheckoutOrder order) {
 		this.rabbitMessagingTemplate.setMessageConverter(this.mappingJackson2MessageConverter);
 		
-		System.out.println("Sending the index request through queue message");
+		System.out.println("Order Procced to Checkout "+ order);
 		
 		rabbitMessagingTemplate.convertAndSend(RabbitConfiguration.ORDER_CHECKOUT_EXCHANGE,"",order);
 		

@@ -19,6 +19,7 @@ import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 public class RabbitConfiguration {
 
     private static final String ORDER_CHECKOUT_EXCHANGE = "orderCheckout";
+    public static final String SHIPPING_ORDER_CREATED_EXCHANGE = "shippingOrderCreated";
 	public static final String BROADCAST_ECOMERCEBACK_ORDER_CHECKOUT_QUEUE = "ecomerce-back.order-checkout.queue";
 	private static final boolean durable = true;
 
