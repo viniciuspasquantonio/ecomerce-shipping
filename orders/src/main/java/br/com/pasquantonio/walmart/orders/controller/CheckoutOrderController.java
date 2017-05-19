@@ -43,7 +43,7 @@ public class CheckoutOrderController {
 	@RequestMapping(value = "/{id}", method = RequestMethod.PUT, consumes="application/json")
 	@ResponseStatus(HttpStatus.OK)
 	public CheckoutOrder update(@RequestBody @Valid CheckoutOrder order, @PathVariable Long id) {
-		return checkoutOrderService.create(order);
+		return checkoutOrderService.update(order);
 	}
 	
 	@RequestMapping(value = "/{id}", method = RequestMethod.DELETE, consumes="application/json")
