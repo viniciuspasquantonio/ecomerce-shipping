@@ -36,8 +36,8 @@ java -jar target/{project.name}-0.0.1-SNAPSHOT.jar
 
 ```bash
 $ curl -i -X POST -H "Content-Type:application/json" -d "{  \"destinationAdress\" : \"Vahia de Abreu\", \"productsQuantity\" : \"5\",  \"invoice\" : \"NoteFiscal\" }" http://localhost:8080/checkoutOrders/
-  {"code":201,"status":"Created"}```
-
+  {"code":201,"status":"Created"}
+```
 
 ##### Lista todas as ordens de saída, cadastradas pelas empresas clientes
 ```bash
@@ -47,7 +47,7 @@ $ curl -i -X GET -H "Content-Type:application/json"  http://localhost:8080/check
 ##### Lista todas as entregas disponiveis para as transportadores
 ```bash
 $  curl -i -X GET -H "Content-Type:application/json"  http://localhost:8090/deliveries/
-  
+ ``` 
 
 #### Transportadora agenda realizar entrega da ordem de saída, mudando o status de Disponível, para Solicitado Agendamento da Entrega, para Solicitação Agendada
 ```bash
@@ -82,7 +82,7 @@ mvn test
 * [Mockito](http://site.mockito.org/) - Test Framework
 * [RestAssured](http://rest-assured.io/) - Integration Test Framework
 
-## Notes
+## Consideraçes
 
 ### - que nosso serviço sempre esteja disponível, mesmo que o banco de dados fique fora do ar, não podemos depender só dele.
 Como utiliza uma arquitetura de microserviços, cada micro serviço tem sua própria base, entao cada microserviço  consegue trabalhar sem depender,
@@ -100,7 +100,7 @@ Tambem temos "durable messages", que fazem com que o rabbitmq nao as perca caso 
 ### - garantirmos que quando uma dependência da nossa aplicação, cair e voltar, ela consiga voltar ao ar normalmente e sem intervenção humana.
 Como dito anteriormente, por trabalhar com uma arquitetura baseada em eventos, com a mensageria e rabbitmq, caso uma aplicacao caia, e vole,
 ela continuar lendo a fila e seguir com o fluxo normal.
-
+Preucupações
 ### - Preucupações não funcionais
 A escolha da arquitetura, de microservicos, orientada a eventos, a própria escolha das ferramentas como o RabbitMQ, Redis, foram pensando nesse cenário de milhares de acessos 
 simultaneos e outras aplicações utilizando o sistema principal da empresa.
