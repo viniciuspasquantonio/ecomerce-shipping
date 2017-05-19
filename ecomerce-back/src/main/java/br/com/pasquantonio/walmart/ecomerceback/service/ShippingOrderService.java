@@ -6,5 +6,7 @@ public interface ShippingOrderService {
 
 	ShippingOrder create(ShippingOrder order);
 
+	void schedule(ShippingOrder order);
+
 	
 }

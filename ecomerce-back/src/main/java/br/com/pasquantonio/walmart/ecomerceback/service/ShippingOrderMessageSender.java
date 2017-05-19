@@ -6,4 +6,6 @@ public interface ShippingOrderMessageSender {
 
 	void sendShippingOrderCreatedMessage(ShippingOrder createdOrder);
 
+	void sendShippingOrderScheduledMessage(ShippingOrder order);
+
 }

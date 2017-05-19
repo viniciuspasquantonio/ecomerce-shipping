@@ -13,6 +13,9 @@ public class DeliveryServiceImpl implements DeliveryService{
 	@Autowired
 	private DeliveryRepository deliveryRepository;
 	
+	@Autowired
+	private ScheduleShippingMessageSender scheduleShippingMessageSender;
+	
 	
 	@Override
 	public Iterable<Delivery> findAll() {
@@ -26,15 +29,20 @@ public class DeliveryServiceImpl implements DeliveryService{
 
 	@Override
 	public Delivery scheduleShipping(Delivery delivery) {
-		delivery.setStatus(DeliveryStatusEnum.SHIPPING_SCHEDULE_REQUESTED);
-		return deliveryRepository.save(delivery);
+		delivery.setStatus(DeliveryStatusEnum.REQUESTED_TO_SCHEDULE_SHIPPING);
+		delivery = deliveryRepository.save(delivery);
+		scheduleShippingMessageSender.requestToScheduleShippingMessage(delivery);
+		return delivery;
 	}
 
 	@Override
 	public Delivery create(Delivery delivery) {
 		delivery.setStatus(DeliveryStatusEnum.AVAILABLE);
-		delivery.setShippingOrderId(delivery.getId());
-		delivery.setId(null);
+		return deliveryRepository.save(delivery);
+	}
+
+	@Override
+	public Delivery update(Delivery delivery) {
 		return deliveryRepository.save(delivery);
 	}
 

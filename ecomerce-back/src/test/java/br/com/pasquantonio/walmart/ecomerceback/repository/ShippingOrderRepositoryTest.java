@@ -41,8 +41,8 @@ public class ShippingOrderRepositoryTest {
         orderRepository.save(order);
 
         //then
-        Assert.assertNotNull(order.getId());
-        ShippingOrder newOrder = orderRepository.findOne(order.getId());
+        Assert.assertNotNull(order.getShippingOrderId());
+        ShippingOrder newOrder = orderRepository.findOne(order.getShippingOrderId());
         Assert.assertEquals(ORDER_DESTINATION_ADRESS, newOrder.getDestinationAdress());
         Assert.assertEquals(ORDER_PRODUCTS_QUANTITY.compareTo(newOrder.getProductsQuantity()), 0);
         Assert.assertEquals(ORDER_INVOICE, newOrder.getInvoice());

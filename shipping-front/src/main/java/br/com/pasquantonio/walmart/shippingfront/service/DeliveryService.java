@@ -12,4 +12,6 @@ public interface DeliveryService {
 
 	Delivery create(Delivery delivery);
 
+	Delivery update(Delivery delivery);
+
 }

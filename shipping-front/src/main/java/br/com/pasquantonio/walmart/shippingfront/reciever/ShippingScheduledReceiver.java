@@ -6,17 +6,19 @@ import org.springframework.stereotype.Service;
 
 import br.com.pasquantonio.walmart.shippingfront.configuration.RabbitConfiguration;
 import br.com.pasquantonio.walmart.shippingfront.domain.Delivery;
+import br.com.pasquantonio.walmart.shippingfront.domain.DeliveryStatusEnum;
 import br.com.pasquantonio.walmart.shippingfront.service.DeliveryService;
 
 @Service
-public class ShippingOrderCreatedReceiver {
+public class ShippingScheduledReceiver {
 
 	@Autowired
 	private DeliveryService deliveryService;
 	
-	@RabbitListener(queues = RabbitConfiguration.SHIPPINGFRONT_CREATE_DELIVERY_QUEUE)
+	@RabbitListener(queues = RabbitConfiguration.SHIPPINGFRONT_SHIPPING_SCHEDULED_QUEUE)
 	public void receiveMessage(Delivery delivery) {
-		deliveryService.create(delivery);
+		delivery.setStatus(DeliveryStatusEnum.SHIPPING_SCHEDULED);
+		deliveryService.update(delivery);
 	}
 
 

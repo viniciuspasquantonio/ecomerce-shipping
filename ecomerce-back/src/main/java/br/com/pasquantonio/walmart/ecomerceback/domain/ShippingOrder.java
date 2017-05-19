@@ -10,9 +10,11 @@ import javax.persistence.Id;
 public class ShippingOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-	private Integer id;
+	private Integer shippingOrderId;
 	
 	private Integer checkoutId;
+	
+	private Integer deliveryId;
 	
 	private Integer productsQuantity;
 	 
@@ -31,12 +33,12 @@ public class ShippingOrder {
 		this.productsQuantity = productsQuantity;
 	}
 
-	public Integer getId() {
-		return id;
+	public Integer getShippingOrderId() {
+		return shippingOrderId;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setShippingOrderId(Integer id) {
+		this.shippingOrderId = id;
 	}
 
 	public Integer getCheckoutId() {
@@ -74,5 +76,13 @@ public class ShippingOrder {
 	@Override
 	public String toString() {
 		return String.format("invoice: %s; destination: %s; checkoutId: %s",invoice,destinationAdress,checkoutId);
+	}
+
+	public Integer getDeliveryId() {
+		return deliveryId;
+	}
+
+	public void setDeliveryId(Integer deliveryId) {
+		this.deliveryId = deliveryId;
 	}
 }

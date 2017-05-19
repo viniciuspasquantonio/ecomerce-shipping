@@ -17,9 +17,11 @@ import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 @Configuration
 @EnableRabbit
 public class RabbitConfiguration {
-	public static final String ORDER_CHECKOUT_EXCHANGE = "orderCheckout";
+	public static final String REQUESTED_TO_SCHEDULE_SHIPPING_EXCHANGE = "requestedToScheduleShipping";
+	public static final String SHIPPING_SCHEDULED_EXCHANGE = "shippingScheduled";
 	public static final String SHIPPING_ORDER_CREATED_EXCHANGE = "shippingOrderCreated";
 	public static final String SHIPPINGFRONT_CREATE_DELIVERY_QUEUE = "shippingfront.createDelivery.queue";
+	public static final String SHIPPINGFRONT_SHIPPING_SCHEDULED_QUEUE = "shippingfront.shippingScheduled.queue";
 	private static final boolean durable = true;
 
     @Bean
@@ -35,16 +37,17 @@ public class RabbitConfiguration {
         return new RabbitAdmin(connectionFactory());
     }
 
-    @Bean
-    public Queue createDeliveryQueue() {
-        return new Queue(SHIPPINGFRONT_CREATE_DELIVERY_QUEUE,durable);
-    }
 
 
     @Bean
     public RabbitTemplate rabbitTemplate() {
         RabbitTemplate rabbitTemplate = new RabbitTemplate(connectionFactory());
         return rabbitTemplate;
+    }
+
+    @Bean
+    public Queue createDeliveryQueue() {
+    	return new Queue(SHIPPINGFRONT_CREATE_DELIVERY_QUEUE,durable);
     }
 
     @Bean
@@ -56,6 +59,23 @@ public class RabbitConfiguration {
     @Bean
     public Binding shippingOrderCreatedBinding() {
         return BindingBuilder.bind(createDeliveryQueue()).to(shippingOrderCreatedExchange());
+    }
+    
+    
+    @Bean
+    public Queue shippingScheduledQueue() {
+    	return new Queue(SHIPPINGFRONT_SHIPPING_SCHEDULED_QUEUE,durable);
+    }
+
+    @Bean
+    public FanoutExchange shippingScheduledExchange() {
+        FanoutExchange exchange = new FanoutExchange(SHIPPING_SCHEDULED_EXCHANGE);
+        return exchange;
+    }
+
+    @Bean
+    public Binding shippingScheduledExchangeBinding() {
+        return BindingBuilder.bind(shippingScheduledQueue()).to(shippingScheduledExchange());
     }
     
     @Bean

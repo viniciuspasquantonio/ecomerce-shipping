@@ -45,8 +45,8 @@ public class DeliveryRepositoryTest {
         orderRepository.save(delivery);
 
         //then
-        Assert.assertNotNull(delivery.getId());
-        Delivery newOrder = orderRepository.findOne(String.valueOf(delivery.getId()));
+        Assert.assertNotNull(delivery.getDeliveryId());
+        Delivery newOrder = orderRepository.findOne(String.valueOf(delivery.getDeliveryId()));
         Assert.assertEquals(ORDER_DESTINATION_ADRESS, newOrder.getDestinationAdress());
         Assert.assertEquals(ORDER_PRODUCTS_QUANTITY.compareTo(newOrder.getProductsQuantity()), 0);
         Assert.assertEquals(ORDER_INVOICE, newOrder.getInvoice());

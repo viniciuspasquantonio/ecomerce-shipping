@@ -26,6 +26,16 @@ public class OrderMessageSenderImpl implements ShippingOrderMessageSender {
 		
 	}
 
+	@Override
+	public void sendShippingOrderScheduledMessage(ShippingOrder order) {
+		this.rabbitMessagingTemplate.setMessageConverter(this.mappingJackson2MessageConverter);
+		
+		System.out.println("Shipping Scheduled "+ order);
+		
+		rabbitMessagingTemplate.convertAndSend(RabbitConfiguration.SHIPPING_SCHEDULED_EXCHANGE,"",order);
+		
+	}
+
 
 
 }

@@ -8,7 +8,7 @@ import org.springframework.data.redis.core.RedisHash;
 public class Delivery {
 
 	@Id
-	private Integer id;
+	private Integer deliveryId;
 
 	private Integer shippingOrderId;
 	private Integer productsQuantity;
@@ -21,12 +21,12 @@ public class Delivery {
 	
 	private DeliveryStatusEnum status;
 
-	public Integer getId() {
-		return id;
+	public Integer getDeliveryId() {
+		return deliveryId;
 	}
 
-	public void setId(Integer id) {
-		this.id = id;
+	public void setDeliveryId(Integer id) {
+		this.deliveryId = id;
 	}
 
 	public Integer getProductsQuantity() {

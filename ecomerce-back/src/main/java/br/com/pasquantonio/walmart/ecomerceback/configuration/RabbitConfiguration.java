@@ -19,10 +19,13 @@ import org.springframework.messaging.converter.MappingJackson2MessageConverter;
 public class RabbitConfiguration {
 
     private static final String ORDER_CHECKOUT_EXCHANGE = "orderCheckout";
+    public static final String REQUESTED_TO_SCHEDULE_SHIPPING_EXCHANGE = "requestedToScheduleShipping";
+    public static final String ECOMERCEBACK_SCHEDULE_SHIPPING_QUEUE = "ecomerce-back.schedule-shipping.queue";
     public static final String SHIPPING_ORDER_CREATED_EXCHANGE = "shippingOrderCreated";
 	public static final String BROADCAST_ECOMERCEBACK_ORDER_CHECKOUT_QUEUE = "ecomerce-back.order-checkout.queue";
 	private static final boolean durable = true;
-
+	public static final String SHIPPING_SCHEDULED_EXCHANGE = "shippingScheduled";
+	 
     @Bean
     public ConnectionFactory connectionFactory() {
         CachingConnectionFactory connectionFactory =
@@ -40,6 +43,11 @@ public class RabbitConfiguration {
     public Queue orderCheckoutQueue() {
         return new Queue(BROADCAST_ECOMERCEBACK_ORDER_CHECKOUT_QUEUE,durable);
     }
+    
+    @Bean
+    public Queue scheduleShippingQueue() {
+        return new Queue(ECOMERCEBACK_SCHEDULE_SHIPPING_QUEUE,durable);
+    }
 
 
     @Bean
@@ -55,8 +63,19 @@ public class RabbitConfiguration {
     }
 
     @Bean
+    public FanoutExchange requestedToScheduleShippingExchange() {
+        FanoutExchange exchange = new FanoutExchange(REQUESTED_TO_SCHEDULE_SHIPPING_EXCHANGE);
+        return exchange;
+    }
+    
+    @Bean
     public Binding orderCheckoutBinding() {
         return BindingBuilder.bind(orderCheckoutQueue()).to(orderCheckoutExchange());
+    }
+    
+    @Bean
+    public Binding requestedToScheduleShippingBinding() {
+        return BindingBuilder.bind(scheduleShippingQueue()).to(requestedToScheduleShippingExchange());
     }
     
     @Bean

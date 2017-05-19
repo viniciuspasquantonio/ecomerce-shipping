@@ -24,4 +24,12 @@ public class ShippingOrderServiceImpl implements ShippingOrderService{
 		return createdOrder;
 	}
 
+	@Override
+	public void schedule(ShippingOrder order) {
+		order.setOrderState(OrderState.SHIPPING_SCHEDULED);
+	    order =  orderRepository.save(order);
+		orderMessageSender.sendShippingOrderScheduledMessage(order);
+		
+	}
+
 }
