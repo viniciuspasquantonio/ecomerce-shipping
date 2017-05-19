@@ -19,10 +19,14 @@ public class ScheduleShippingMessageSenderImpl implements ScheduleShippingMessag
 	
 	public void requestToScheduleShippingMessage(Delivery delivery) {
 		this.rabbitMessagingTemplate.setMessageConverter(this.mappingJackson2MessageConverter);
-		
-		System.out.println("Deliver Shipping Schedulle requested "+ delivery);
-		
 		rabbitMessagingTemplate.convertAndSend(RabbitConfiguration.REQUESTED_TO_SCHEDULE_SHIPPING_EXCHANGE,"",delivery);
+		
+	}
+	
+	@Override
+	public void shippedMessage(Delivery delivery) {
+		this.rabbitMessagingTemplate.setMessageConverter(this.mappingJackson2MessageConverter);
+		rabbitMessagingTemplate.convertAndSend(RabbitConfiguration.SHIPPED_EXCHANGE,"",delivery);
 		
 	}
 }

@@ -43,6 +43,12 @@ public class DeliveryController {
 		return deliveryService.scheduleShipping(delivery);
 	}
 	
+	@RequestMapping(value = "/{id}/finishShipping", method = RequestMethod.PUT, consumes="application/json")
+	@ResponseStatus(HttpStatus.OK)
+	public Delivery shipped(@RequestBody @Valid Delivery delivery, @PathVariable Long id) {
+		return deliveryService.finishShipping(delivery);
+	}
+	
 	
 	@ResponseStatus(HttpStatus.BAD_REQUEST)
 	@ExceptionHandler(value = {EmptyResultDataAccessException.class})

@@ -46,4 +46,14 @@ public class DeliveryServiceImpl implements DeliveryService{
 		return deliveryRepository.save(delivery);
 	}
 
+	@Override
+	public Delivery finishShipping(Delivery delivery) {
+		delivery.setStatus(DeliveryStatusEnum.SHIPPED);
+		delivery = deliveryRepository.save(delivery);
+		scheduleShippingMessageSender.shippedMessage(delivery);
+		return delivery;
+	}
+
+
+
 }

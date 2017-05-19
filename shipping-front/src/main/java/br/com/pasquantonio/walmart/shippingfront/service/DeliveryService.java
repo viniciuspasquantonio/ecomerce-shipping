@@ -14,4 +14,6 @@ public interface DeliveryService {
 
 	Delivery update(Delivery delivery);
 
+	Delivery finishShipping(Delivery delivery);
+
 }

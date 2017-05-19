@@ -23,6 +23,7 @@ public class RabbitConfiguration {
 	public static final String SHIPPINGFRONT_CREATE_DELIVERY_QUEUE = "shippingfront.createDelivery.queue";
 	public static final String SHIPPINGFRONT_SHIPPING_SCHEDULED_QUEUE = "shippingfront.shippingScheduled.queue";
 	private static final boolean durable = true;
+	public static final String SHIPPED_EXCHANGE = "shipped";
 
     @Bean
     public ConnectionFactory connectionFactory() {
@@ -36,8 +37,6 @@ public class RabbitConfiguration {
     public AmqpAdmin amqpAdmin() {
         return new RabbitAdmin(connectionFactory());
     }
-
-
 
     @Bean
     public RabbitTemplate rabbitTemplate() {

@@ -25,6 +25,8 @@ public class RabbitConfiguration {
 	public static final String BROADCAST_ECOMERCEBACK_ORDER_CHECKOUT_QUEUE = "ecomerce-back.order-checkout.queue";
 	private static final boolean durable = true;
 	public static final String SHIPPING_SCHEDULED_EXCHANGE = "shippingScheduled";
+	public static final String SHIPPED_EXCHANGE = "shipped";
+	public static final String ECOMERCEBACK_SHIPPED_QUEUE = "ecomerce-back.shipped.queue";
 	 
     @Bean
     public ConnectionFactory connectionFactory() {
@@ -76,6 +78,23 @@ public class RabbitConfiguration {
     @Bean
     public Binding requestedToScheduleShippingBinding() {
         return BindingBuilder.bind(scheduleShippingQueue()).to(requestedToScheduleShippingExchange());
+    }
+    
+    @Bean
+    public FanoutExchange shippedExchange() {
+        FanoutExchange exchange = new FanoutExchange(SHIPPED_EXCHANGE);
+        return exchange;
+    }
+    
+    
+    @Bean
+    public Queue shippedQueue() {
+        return new Queue(ECOMERCEBACK_SHIPPED_QUEUE,durable);
+    }
+    
+    @Bean
+    public Binding shippedBinding() {
+        return BindingBuilder.bind(shippedQueue()).to(shippedExchange());
     }
     
     @Bean
