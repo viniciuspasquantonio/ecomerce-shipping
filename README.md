@@ -28,8 +28,8 @@ Build and start each of the three projects by running the following comand in it
 
 ```
 maven clean install
-java -jar target/{project.name}-0.0.1-SNAPSHOT.jar```
-
+java -jar target/{project.name}-0.0.1-SNAPSHOT.jar
+```
 #### How to use
 
 ##### Cria uma ordem de saída
