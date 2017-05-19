@@ -86,23 +86,32 @@ mvn test
 
 ### - que nosso serviço sempre esteja disponível, mesmo que o banco de dados fique fora do ar, não podemos depender só dele.
 Como utiliza uma arquitetura de microserviços, cada micro serviço tem sua própria base, entao cada microserviço  consegue trabalhar sem depender,
-por exemplo, do sistema back. O sistema foi dividio em 2 serviços, um responsavel por criar as entregas, e outro responsavel por atualiza
+por exemplo, do sistema ecomerce-back. O sistema foi dividio em 2 serviços, um responsavel por criar as entregas, e outro responsavel por atualiza
 o status das entregas. Caso o sistema de criação de entregas esteja fora, ainda  possível mudar o status das entregas, e vice versa.
 Até mesmo se o sistema principal da empresa, representado pelo ecomerce-back cair, conseguimos criar entregas e atualizar status, embora,
-ao criar ou atualizar um status, esperamos uma resposta de confirmacao do sistema principal, que poderia facilmente ser tirada, foi deixada apenas por
+ao criar entregas ou atualizar status, esperamos uma resposta de confirmacao do sistema principal, que poderia facilmente ser tirada, foi deixada apenas por
 achar que faz parte da regra do negócio.
 
 ### - ter o controle de resposta da conexão com nossas dependências, não podemos esperar horas a resposta da conexão com o banco de dados, por exemplo.
 Ao utilizar o padrao de mensagens assincronas para conversar entre os sistemas, pouco importa a conexao com os outros sistemas ou o banco, uma vez que enviamos
-jogamos as tasks na fila, e, quando os sistemas voltarem, vo consumir a fila seguir com o que fluxo normal. Essa demora não bloca o serviço que criou a mensagem
+jogamos as tasks na fila, com isso, não blocamos o serviço que criou a mensagem.
 Tambem temos "durable messages", que fazem com que o rabbitmq nao as perca caso se encerre inesperadamente.
 
 ### - garantirmos que quando uma dependência da nossa aplicação, cair e voltar, ela consiga voltar ao ar normalmente e sem intervenção humana.
-Como dito anteriormente, por trabalhar com uma arquitetura baseada em eventos, com a mensageria e rabbitmq, caso uma aplicacao caia, e vole,
+Como dito anteriormente, por trabalhar com uma arquitetura baseada em eventos, com a mensageria e rabbitmq, caso uma aplicacao caia, e volte,
 ela continuar lendo a fila e seguir com o fluxo normal.
-Preucupações
-### - Preucupações não funcionais
+
+### - Preocupações não funcionais
 A escolha da arquitetura, de microservicos, orientada a eventos, a própria escolha das ferramentas como o RabbitMQ, Redis, foram pensando nesse cenário de milhares de acessos 
 simultaneos e outras aplicações utilizando o sistema principal da empresa.
 Deixamos um banco nao relacional para cada micro servico que foi desenvolvido, justamente para que o tamamnho da base, a concorrencia com outras aplicações não interfiram na resposta para o usuario.
 Quando precisamos utilizar esse sistema principal, fazemos de modo assincrono e utilizando o RabbitMQ, mandamos uma mensagem para o banco e esperamos uma resposta sem que a demora ou a falta dela, tenha grandes impactos para o usuario
+
+### TODO
+
+- Testes de integração
+- Profile para testes e configuração do ambiente para os testes
+- Tratamentos de erros, principalmente ao processar uma task da fila
+- MachineState para cuidar dos estados da entrega
+- deploy automatico
+- Refactor nos nomes do modelo de negocio
