@@ -10,4 +10,6 @@ public interface DeliveryService {
 
 	Delivery scheduleShipping(Delivery delivery);
 
+	Delivery create(Delivery delivery);
+
 }

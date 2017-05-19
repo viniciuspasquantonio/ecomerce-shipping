@@ -30,4 +30,12 @@ public class DeliveryServiceImpl implements DeliveryService{
 		return deliveryRepository.save(delivery);
 	}
 
+	@Override
+	public Delivery create(Delivery delivery) {
+		delivery.setStatus(DeliveryStatusEnum.AVAILABLE);
+		delivery.setShippingOrderId(delivery.getId());
+		delivery.setId(null);
+		return deliveryRepository.save(delivery);
+	}
+
 }
