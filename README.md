@@ -82,7 +82,7 @@ mvn test
 * [Mockito](http://site.mockito.org/) - Test Framework
 * [RestAssured](http://rest-assured.io/) - Integration Test Framework
 
-## Consideraçes
+## Considerações
 
 ### - que nosso serviço sempre esteja disponível, mesmo que o banco de dados fique fora do ar, não podemos depender só dele.
 Como utiliza uma arquitetura de microserviços, cada micro serviço tem sua própria base, entao cada microserviço  consegue trabalhar sem depender,
